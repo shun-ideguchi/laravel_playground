@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\{
+    Admin\LoginController as AdminLoginController,
+    Admin\RegisterController as AdminRegisterController,
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +30,11 @@ Route::middleware('auth')->group(function () {
 });
 
 // admin
-Route::middleware('auth:admin')->group(function () {
-    // Route::
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', [AdminLoginController::class, 'showLoginForm']);
+    Route::get('/register', [AdminRegisterController::class, 'showRegistrationForm']);
+    Route::post('/register', [AdminRegisterController::class, 'register'])->name('register');
+    Route::middleware('auth:admin')->group(function () {
+        // Route::
+    });
 });
